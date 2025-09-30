@@ -699,3 +699,9 @@ if __name__ == '__main__':
             ADMINS = []
     print("Starting bot...")
     main()
+import threading
+
+def start_bot_background():
+    thread = threading.Thread(target=main)  # main() là hàm khởi động bot của bạn
+    thread.daemon = True
+    thread.start()
