@@ -690,24 +690,28 @@ def main():
         # Try to get updates to find a group id - or admin should call /openbet with bot in group
     updater.idle()
 
-# ... (toàn bộ code bot ở trên, có hàm main())
-
-def main():
-    # code chạy bot
-    updater.start_polling()
-    updater.idle()
-
-# --- DÁN ĐOẠN NÀY Ở CUỐI FILE ---
 import threading
 import time
 
 def start_bot_background():
-    thread = threading.Thread(target=main)  # gọi main()
+    # Chạy hàm main() trong thread riêng
+    thread = threading.Thread(target=main)
     thread.daemon = True
     thread.start()
 
 if __name__ == "__main__":
     print("Starting bot...")
+
+    # Nếu có biến môi trường ADMIN_IDS_ENV thì parse
+    if ADMIN_IDS_ENV and not ADMINS:
+        try:
+            ADMINS = [int(x.strip()) for x in ADMIN_IDS_ENV.split(",") if x.strip()]
+        except Exception:
+            ADMINS = []
+
+    # Khởi động bot trong background
     start_bot_background()
-    while True:  # giữ cho process không thoát
+
+    # Giữ cho process chính không bị thoát
+    while True:
         time.sleep(60)
