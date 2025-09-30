@@ -695,7 +695,7 @@ import time
 
 def start_bot_background():
     # Chạy hàm main() trong thread riêng
-    thread = threading.Thread(target=main)
+    thread = threading.Thread(target=main)  # main() phải được định nghĩa ở trên
     thread.daemon = True
     thread.start()
 
@@ -712,6 +712,6 @@ if __name__ == "__main__":
     # Khởi động bot trong background
     start_bot_background()
 
-    # Giữ cho process chính không bị thoát
+    # Giữ cho process chính không bị thoát (Render cần cái này)
     while True:
         time.sleep(60)
