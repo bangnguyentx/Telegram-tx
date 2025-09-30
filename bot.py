@@ -697,11 +697,17 @@ if __name__ == '__main__':
             ADMINS = [int(x.strip()) for x in ADMIN_IDS_ENV.split(',') if x.strip()]
         except:
             ADMINS = []
-    print("Starting bot...")
-    main()
-import threading
+    import threading
 
 def start_bot_background():
-    thread = threading.Thread(target=main)  # main() là hàm khởi động bot của bạn
+    thread = threading.Thread(target=main)  # main() là hàm khởi động bot
     thread.daemon = True
     thread.start()
+
+if __name__ == "__main__":
+    print("Starting bot...")
+    start_bot_background()
+    # Giữ cho process chính không thoát
+    import time
+    while True:
+        time.sleep(60)
